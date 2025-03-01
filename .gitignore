@@ -44,3 +44,6 @@ coverage.xml
 
 # Mac OS
 .DS_Store
+
+# vectore stores
+vector_stores/
