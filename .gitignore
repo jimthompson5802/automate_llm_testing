@@ -41,3 +41,6 @@ coverage.xml
 
 # Logs
 *.log
+
+# Mac OS
+.DS_Store
