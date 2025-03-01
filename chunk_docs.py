@@ -9,7 +9,7 @@ import faiss
 
 # Set the directory path
 docs_dir = "raw_documents"  # Create this folder in your project directory
-vector_db_fp = "vector_dbs/vector_store_openai.db"
+vector_db_fp = "vector_stores/vector_store_faiss_openai"
 
 # Load all text documents from the directory
 loader = DirectoryLoader(docs_dir, glob="**/*.txt")  # Loads all .txt files recursively
