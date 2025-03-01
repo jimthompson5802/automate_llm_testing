@@ -1,8 +1,9 @@
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
-from langchain_community.vectorstores import SQLiteVec
+from langchain_community.vectorstores import FAISS
+from langchain_community.docstore.in_memory import InMemoryDocstore
 from langchain_community.document_loaders import DirectoryLoader
-import sqlite3
+import faiss
 
 
 
@@ -24,55 +25,32 @@ chunks = text_splitter.split_documents(documents)
 # Create embeddings and store in vector database
 embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
 
-# Initialize SQLite database
-conn = sqlite3.connect(vector_db_fp)
-conn.enable_load_extension(True)
-conn.load_extension("./venv/lib/python3.12/site-packages/sqlite_vec/vec0")  # Make sure the SQLite vector extension is installed
-
-# Create vector store
-vector_store = SQLiteVec(
-    "documents",
-    embedding=embeddings,
-    connection=conn,
+# setup vector store
+vector_length = len(embeddings.embed_query("hello world"))   # compute size for embedding vector with a sample query
+faiss_index = faiss.IndexFlatL2(vector_length) 
+vector_store = FAISS(
+    embedding_function=embeddings,
+    index=faiss_index,
+    docstore=InMemoryDocstore(),
+    index_to_docstore_id={},
 )
 
-# vectorstore = SQLiteVec.from_documents(
-#     documents=chunks,
-#     embedding=embeddings,
-#     connection=conn,
-#     table_name="documents",
-#     db_file=vector_db_fp,
-# )
-
+#
 # Store chunks in the vectorstore
-vector_store.from_documents(chunks, embeddings)
-
-conn.close()
+vector_store = FAISS.from_documents(chunks, embeddings)
 
 
-# Connect to the database
-# Initialize SQLite database
-conn = sqlite3.connect(vector_db_fp)
-conn.enable_load_extension(True)
-conn.load_extension("./venv/lib/python3.12/site-packages/sqlite_vec/vec0")  # Make sure the SQLite vector extension is installed
+vector_store.save_local(vector_db_fp)
 
-vectorstore = SQLiteVec(
-    "documents",
-    embedding=embeddings,
-    connection=conn,
+del vector_store
+
+
+vector_store = FAISS.load_local(
+    vector_db_fp, embeddings, allow_dangerous_deserialization=True
 )
-
-cursor = conn.cursor()
-tables = cursor.execute("SELECT name FROM sqlite_master WHERE type='table'").fetchall()
-print("\nTables in database:")
-for table in tables:
-    print(f"- {table[0]}")
-    schema = cursor.execute(f"SELECT sql FROM sqlite_master WHERE type='table' AND name='{table[0]}'").fetchone()
-    print(f"Schema: {schema[0]}\n")
-
 # Retrieve chunks based on a prompt
 query = "What are the considerations for extraterrestrial travel?"
-relevant_chunks = vectorstore.similarity_search(query, k=3)
+relevant_chunks = vector_store.similarity_search(query, k=3)
 
 # Print retrieved chunks
 print(f"query: {query}, related material")
@@ -93,4 +71,4 @@ for i, chunk in enumerate(relevant_chunks):
 # for i, doc in enumerate(all_docs):
 #     print(f"\n>>>chunk {i+1}: '{doc.page_content}'")
 
-conn.close()
+
