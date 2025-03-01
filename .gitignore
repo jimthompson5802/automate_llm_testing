@@ -47,3 +47,6 @@ coverage.xml
 
 # vectore stores
 vector_stores/
+
+*.json
+!test_sets/*.json
