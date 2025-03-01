@@ -16,7 +16,7 @@ for file in os.listdir(RAW_DATA_DIR):
         # as the prompt
         prompt = "Provide a summary of " + os.path.splitext(file)[0].replace("_", " ") 
         text = f.read()
-        test_set.append({"prompt": prompt, "golden_response": text})
+        test_set.append({"prompt": prompt, "target_response": text})
 
 # save the test set list as a json file
 with open(BASELINE_TEST_SET, "w") as f:
