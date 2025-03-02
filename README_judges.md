@@ -87,7 +87,7 @@ As a result of the deficiency noted with `MTBenchCharBotResponseQuality`, which 
 |Provide a summary of artificial intelligence     |10|   
 |Provide a summary of vaccines     |8|
 
-* **Reversed**:  The expected scores should have been numeric.  With the exception of one test case, which scored "2", the others scored "True".  This is not the exepected behavior.  One possible reason is that "1" is a "truthy" value in Python.  It is possible that a component of `judges` is translating "1" to "True".  If we consder this possibility, then the scores are consistent with the way the test set was constructed.  More research is needed to confirm this and determin it this issue can be resolved.
+* **Reversed**:  The expected scores should have been numeric.  With the exception of one test case, which scored "2", the others scored "True".  This is not the exepected behavior.  One possible reason is that "1" is a "truthy" value in Python.  It is possible that a component of `judges` is translating "1" to "True".  If we consder this possibility, then the scores are consistent with the way the test set was constructed.  More research is needed to confirm this and determine it this issue can be resolved.
 
 |prompt|score|
 |---|---|
