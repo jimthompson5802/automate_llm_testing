@@ -19,8 +19,11 @@ GH repo: [judges](https://github.com/quotient-ai/judges)
 
 Evaluation uses OpenAI `gpt-4o` model.
 
-* `MTBenchCharBotResponseQuality` class
-  * **Baseline**: Scores range from 1(bad) to 10(good).  For the most part scores are consistent with the way the test set was constructed.
+#### Out-of-the-box classes
+
+`MTBenchCharBotResponseQuality` class
+
+* **Baseline**: Scores range from 1(bad) to 10(good).  For the most part scores are consistent with the way the test set was constructed.
 
 |prompt|score|
 |---|---|
@@ -31,7 +34,7 @@ Evaluation uses OpenAI `gpt-4o` model.
 |Provide a summary of artificial intelligence     |8|   
 |Provide a summary of vaccines     |8|
 
-  * **Reversed**:  These scrores are **NOT** consistent with the way the test set was constructed.  Upon further investigation it became clear this class does not consider the `expected` parameter.  The scores are based soley on the inherent quality of the response and there is no comparision with the target response.
+* **Reversed**:  These scrores are **NOT** consistent with the way the test set was constructed.  Upon further investigation it became clear this class does not consider the `expected` parameter.  The scores are based soley on the inherent quality of the response and there is no comparision with the target response.
 
 |prompt|score|
 |---|---|
@@ -42,9 +45,9 @@ Evaluation uses OpenAI `gpt-4o` model.
 |Provide a summary of artificial intelligence     |9|   
 |Provide a summary of vaccines     |8|
 
-* `PollMultihopCorrectness` class
+`PollMultihopCorrectness` class
 
-  * **Baseline**: Scores are either `True` or `False`.  With the exception of one test case, the scores are consistent with the way the test set was constructed.
+* **Baseline**: Scores are either `True` or `False`.  With the exception of one test case, the scores are consistent with the way the test set was constructed.
 
 |prompt|score|
 |---|---|
@@ -55,7 +58,7 @@ Evaluation uses OpenAI `gpt-4o` model.
 |Provide a summary of artificial intelligence     |True|   
 |Provide a summary of vaccines     |False|
 
-  * **Reversed**:  These scrores are consistent with the way the test set was constructed. 
+* **Reversed**:  These scrores are consistent with the way the test set was constructed. 
 
 |prompt|score|
 |---|---|
@@ -65,3 +68,32 @@ Evaluation uses OpenAI `gpt-4o` model.
 |Provide a summary of climate change     |False|
 |Provide a summary of artificial intelligence     |False|   
 |Provide a summary of vaccines     |False|
+
+
+#### Custom class
+
+As a result of the deficiency noted with `MTBenchCharBotResponseQuality`, which does not use the ``expected`` parameter, I created a custom class`SemanticAlignmentJudge` to make use of the `expected` parameter.  This custom class generates a score from 1 to 10, similar to `MTBenchmarkCharBotResponseQuality`.
+
+`SemanticAlignmentJudge` class
+
+* **Baseline**: The scores good alignment with the target response.  The reason given for the score of "8" for the vaccine prompt is information is missing from the retrieved text compared to the target response.  A manual inspection of the response confirms this.
+
+|prompt|score|
+|---|---|
+|Provide a summary of space exploration     |10| 
+|Provide a summary of philosopy consciousness     |10|   
+|Provide a summary of ancient civilizations     |10|
+|Provide a summary of climate change     |10|
+|Provide a summary of artificial intelligence     |10|   
+|Provide a summary of vaccines     |8|
+
+* **Reversed**:  The expected scores should have been numeric.  With the exception of one test case, which scored "2", the others scored "True".  This is not the exepected behavior.  One possible reason is that "1" is a "truthy" value in Python.  It is possible that a component of `judges` is translating "1" to "True".  If we consder this possibility, then the scores are consistent with the way the test set was constructed.  More research is needed to confirm this and determin it this issue can be resolved.
+
+|prompt|score|
+|---|---|
+|Provide a summary of space exploration     |True| 
+|Provide a summary of philosopy consciousness     |True|   
+|Provide a summary of ancient civilizations     |True|
+|Provide a summary of climate change     |True|
+|Provide a summary of artificial intelligence     |2|   
+|Provide a summary of vaccines     |True|
