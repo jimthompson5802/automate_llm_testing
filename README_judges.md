@@ -102,7 +102,7 @@ As a result of the deficiency noted with `MTBenchCharBotResponseQuality`, which 
 
 Given the issues noted with `MTBenchCharBotResponseQuality` this class was not tested in Phase 2.  Only the custom class `SemanticAlignmentJudge` and `PollMultihopCorrectness` were tested.
 
-Notebook [`evaluate_judges_rewritten_test_set.ipynb`](./evaluate_judges_rewritten_test_set.ipynb) (commit: XXXXX) contains results of Phase 2 testing.
+Notebook [`evaluate_judges_rewritten_test_set.ipynb`](./evaluate_judges_rewritten_test_set.ipynb) (commit: 3e7b61b) contains results of Phase 2 testing.
 
 `SemanticAlignmentJudge` class
 
