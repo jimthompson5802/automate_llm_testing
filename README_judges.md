@@ -12,8 +12,8 @@ GH repo: [judges](https://github.com/quotient-ai/judges)
 * Package does not appear to have an active community.  
 
 ### Tests
-* Notebook [`evaluate_judges_test_set.ipynb`](./evaluate_judges_test_set.ipynb) demonstrates using `judges`.
-* Given the issue noted with `MTBenchCharBotResponseQuality`, created a custom class that explictily considers the `expected` paramamter.  This is in the notebook [`evaluate_judges_test_set_custom.ipynb`](./evaluate_judges_test_set_custom.ipynb).
+* Notebook [`evaluate_judges_test_set.ipynb`](./evaluate_judges_test_set.ipynb) (commit: 6e57563) demonstrates using `judges`.
+* Given the issue noted with `MTBenchCharBotResponseQuality`, created a custom class that explictily considers the `expected` paramamter.  This is in the notebook [`evaluate_judges_test_set_custom.ipynb`](./evaluate_judges_test_set_custom.ipynb) (commit: 6e57563).
 
 ### Results
 
