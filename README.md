@@ -20,10 +20,14 @@ Establish a pipeline to test various methods for automating the evaluation of ge
 * Compute overall metrics for the evaluation method.
 * Repeat for different evaluation methods.
 
-### Test Cases
+### Test Cases: Phase 1
 For now two test cases are considered:
 * **Baseline**: Prompts and target responses are constructed to have alignment. The target response is highly related to the prompt.  This should result in metrics indicating high quality.
 * **Reversed**: Prompts and target responses are constructed to have misalignment. The target response is not related to the prompt. This should lead to metrics indicating low quality.
+
+### Test Cases: Phase 2
+
+In this phase, instead of target responses being verbatim content of the raw documents, the target responses will be rewritten text that is "semantically equivalent" to the raw documents.  This should test the robustness of the evaluation methods.
 
 
 ## Installation Considersations
