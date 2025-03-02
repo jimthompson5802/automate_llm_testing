@@ -33,4 +33,6 @@ For now two test cases are considered:
 
 ## Observations
 
+Click on links to see more details.
+
 * Package [`judges`](./README_judges.md)
