@@ -1,7 +1,8 @@
-# test bed for LLM Testing
+# Testbed for Automated Testing of LLM Ouputs
+
+## UNDER CONSTRUCTION
 
 
-## setup
 
 
 ## Installation Considersations
@@ -41,3 +42,19 @@ langchain-openai 0.3.7 requires openai<2.0.0,>=1.58.1, but you have openai 1.57.
 Successfully installed judges-0.0.6 openai-1.57.4
 
 ```
+
+## Observations
+
+### Open-source Package `judges`
+
+#### Pros
+* Out-of-the-box integration with OpenAI API.  No issues found.
+
+#### Cons
+* Lacking API documentation.  Have to read the source code to understand how to use the package.
+* Limited number of examples compared to the number of classes and methods.  This makes it difficult to understand how to use the package.
+* API signature can be misleading, for example, several classes have a parameter called `expected`.  Turns out this parameter is not used in the code, e.g., `MTBenchCharBotResponseQuality` class.  In others a required parameter is not supported, e.g, `context` parameter in `ReliableCIRelevance` class.
+* Package does not appear to have an active community.  
+
+#### Tests
+* Notebook [`evaluate_judges_test_set.ipynb`](./evaluate_judges_test_test.ipynb) demonstrates using `judges`.
