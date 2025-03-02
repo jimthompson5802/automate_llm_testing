@@ -30,13 +30,23 @@ For now two test cases are considered:
 In this phase, instead of target responses being verbatim content of the raw documents, the target responses will be rewritten text that is "semantically equivalent" to the raw documents.  This should test the robustness of the evaluation methods.  For this phase both **Baseline** and **Reversed** test cases will be considered.
 
 
-## Installation Considersations
-
-* `brew install libmagic` to faciliate document loading.
-
-
 ## Observations
 
 Click on links to see more details.
 
 * Package [`judges`](./README_judges.md)
+
+
+## Hardware and Software Setup
+
+### Hardware
+* Macbook Pro 16" (Nov 2024)
+* Apple Silicon M4 Max - 16 cores
+* Apple Silicon GPU - 40 cores
+* 48 GB RAM
+
+
+### Software
+* macOS 15.3.1 (Sequoia)
+* `brew install libmagic` to faciliate document loading.
+* `requirements.txt` contains the necessary Python packages.
