@@ -57,4 +57,4 @@ Successfully installed judges-0.0.6 openai-1.57.4
 * Package does not appear to have an active community.  
 
 #### Tests
-* Notebook [`evaluate_judges_test_set.ipynb`](./evaluate_judges_test_test.ipynb) demonstrates using `judges`.
+* Notebook [`evaluate_judges_test_set.ipynb`](./evaluate_judges_test_set.ipynb) demonstrates using `judges`.
