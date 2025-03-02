@@ -47,7 +47,7 @@ Evaluation uses OpenAI `gpt-4o` model.
 
 `PollMultihopCorrectness` class
 
-* **Baseline**: Scores are either `True` or `False`.  With the exception of one test case, the scores are consistent with the way the test set was constructed.
+* **Baseline**: Scores are either `True` or `False`.  In the case of the `False` test case, the reason given is the response was incomplete when compared to the target response.  A manual inspection of the response confirms this.  Given this then the scores are consistent with the way the test set was constructed and how responses were returned.
 
 |prompt|score|
 |---|---|
