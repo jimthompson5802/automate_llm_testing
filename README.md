@@ -47,6 +47,8 @@ Successfully installed judges-0.0.6 openai-1.57.4
 
 ### Open-source Package `judges`
 
+GH repo: [judges](https://github.com/quotient-ai/judges)
+
 #### Pros
 * Out-of-the-box integration with OpenAI API.  No issues found.
 
