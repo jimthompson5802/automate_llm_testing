@@ -27,7 +27,7 @@ For now two test cases are considered:
 
 ### Test Cases: Phase 2
 
-In this phase, instead of target responses being verbatim content of the raw documents, the target responses will be rewritten text that is "semantically equivalent" to the raw documents.  This should test the robustness of the evaluation methods.
+In this phase, instead of target responses being verbatim content of the raw documents, the target responses will be rewritten text that is "semantically equivalent" to the raw documents.  This should test the robustness of the evaluation methods.  For this phase both **Baseline** and **Reversed** test cases will be considered.
 
 
 ## Installation Considersations
