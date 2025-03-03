@@ -10,5 +10,5 @@ matplotlib
 scipy
 numpy
 pandas
-judges
+judges[litellm,auto]
 unstructured
