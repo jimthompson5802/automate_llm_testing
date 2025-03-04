@@ -2,6 +2,7 @@
 
 from litellm import completion, embedding 
 import numpy as np
+from langchain_ollama import OllamaEmbeddings
 
 response = completion(
     model="ollama_chat/hf.co/MaziyarPanahi/Mistral-7B-Instruct-v0.3-GGUF:Q8_0",
@@ -24,3 +25,11 @@ embedding_response = embedding(
 )
 
 print(np.array([x["embedding"] for x in embedding_response.data]).shape)
+
+
+embeddings = OllamaEmbeddings(
+    model="nomic-embed-text", 
+    base_url="http://localhost:11434"
+)
+
+print(embeddings.embed_documents(["hello world", "goodbye world"]))
