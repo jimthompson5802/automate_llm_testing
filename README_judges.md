@@ -4,7 +4,7 @@ GH repo: [judges](https://github.com/quotient-ai/judges)
 
 ### Pros
 * Out-of-the-box integration with OpenAI API.  No issues found.
-* Able to use nomic-embed-text embedding model with local ollama server without any issues with langchain `OllamaEmbeddings` class
+* Able to use `nomic-embed-text` embedding model with local ollama server without any issues with langchain `OllamaEmbeddings` class
 
 ### Cons
 * Lacking API documentation.  Have to read the source code to understand how to use the package.
