@@ -9,18 +9,18 @@ GH repo: [judges](https://github.com/quotient-ai/judges)
 ### Cons
 * Lacking API documentation.  Have to read the source code to understand how to use the package.
 * Limited number of examples compared to the number of classes and methods.  This makes it difficult to understand how to use the package.
-* API signature can be misleading, for example, several classes have a parameter called `expected`.  Turns out this parameter is not used in the code, e.g., `MTBenchCharBotResponseQuality` class.  In others a required parameter is not supported, e.g, `context` parameter in `ReliableCIRelevance` class.
+* API signature can be misleading, for example, several classes have a parameter called `expected`.  Turns out this parameter is not used in the code, e.g., `MTBenchChatBotResponseQuality` class.  In others a required parameter is not supported, e.g, `context` parameter in `ReliableCIRelevance` class.
 * Package does not appear to have an active community.
 * Sparse documentation on how to use and configure`litellm` instead of OpenAI LLM.  Eventually had to set breakpoints and trace real-time execution in the `litellm` modules to understand how to specify a non-OpenAI LLM to use with `judges`.
 * Partial working with `litellm` with `ollama_chat/llama2:13b` LLM with local ollama server.  Results not as good as `gpt-4o` model and run-time exception.
 * With `litellm` with `ollama_chat/gemma2:27b` LLM with local ollama server.  No runtime exceptions.  Results not as good as `gpt-4o` model.
-* 
+* With `litellm` with `ollama_chat/deepskee-r1:32b` LLM with local ollama server.  Unable to get it to work.  Run-time exception.
 
 
 
 ### Phase 1 Test Cases
 * Notebook [`evaluate_judges_test_set.ipynb`](./evaluate_judges_test_set.ipynb) (commit: 6e57563) demonstrates using `judges`.
-* Given the issue noted with `MTBenchCharBotResponseQuality`, created a custom class that explictily considers the `expected` paramamter.  This is in the notebook [`evaluate_judges_test_set_custom.ipynb`](./evaluate_judges_test_set_custom.ipynb) (commit: 6e57563).
+* Given the issue noted with `MTBenchChatBotResponseQuality`, created a custom class that explictily considers the `expected` paramamter.  This is in the notebook [`evaluate_judges_test_set_custom.ipynb`](./evaluate_judges_test_set_custom.ipynb) (commit: 6e57563).
 
 ### Results
 
@@ -28,7 +28,7 @@ Evaluation uses OpenAI `gpt-4o` model.
 
 #### Out-of-the-box classes
 
-`MTBenchCharBotResponseQuality` class
+`MTBenchChatBotResponseQuality` class
 
 * **Baseline**: Scores range from 1(bad) to 10(good).  For the most part scores are consistent with the way the test set was constructed.
 
@@ -79,7 +79,7 @@ Evaluation uses OpenAI `gpt-4o` model.
 
 #### Custom class
 
-As a result of the deficiency noted with `MTBenchCharBotResponseQuality`, which does not use the ``expected`` parameter, I created a custom class`SemanticAlignmentJudge` to make use of the `expected` parameter.  This custom class generates a score from 1 to 10, similar to `MTBenchmarkCharBotResponseQuality`.
+As a result of the deficiency noted with `MTBenchChatBotResponseQuality`, which does not use the ``expected`` parameter, I created a custom class`SemanticAlignmentJudge` to make use of the `expected` parameter.  This custom class generates a score from 1 to 10, similar to `MTBenchmarkChatBotResponseQuality`.
 
 `SemanticAlignmentJudge` class
 
@@ -107,7 +107,7 @@ As a result of the deficiency noted with `MTBenchCharBotResponseQuality`, which 
 
 ### Phase 2 Test Cases
 
-Given the issues noted with `MTBenchCharBotResponseQuality` this class was not tested in Phase 2.  Only the custom class `SemanticAlignmentJudge` and `PollMultihopCorrectness` were tested.
+Given the issues noted with `MTBenchChatBotResponseQuality` this class was not tested in Phase 2.  Only the custom class `SemanticAlignmentJudge` and `PollMultihopCorrectness` were tested.
 
 Notebook [`evaluate_judges_rewritten_test_set.ipynb`](./evaluate_judges_rewritten_test_set.ipynb) (commit: 3e7b61b) contains results of Phase 2 testing.
 
@@ -164,7 +164,7 @@ Notebook [`evaluate_judges_rewritten_test_set.ipynb`](./evaluate_judges_rewritte
 
 Notebook: `evaluate_judges_test_set_litellm.ipynb`
 
-####  `MTBenchCharBotResponseQuality` class with `baseline` test set
+####  `MTBenchChatBotResponseQuality` class with `baseline` test set
 ```text
 >>>QUALITY: Judgment(score=True, reasoning="The assistant's answer provides a comprehensive and accurate summary of vaccines, including their purpose, types, and effectiveness in controlling and eradicating infectious diseases. The response is well-structured, with clear transitions between sections, and uses appropriate medical terminology to convey the information effectively. Additionally, the assistant has provided a historical context for vaccine development and highlighted the importance of continued research and accessibility. Overall, the answer demonstrates a high level of helpfulness, relevance, accuracy, depth, creativity, and detail.")
 Index(['score', 'reasoning', 'prompt', 'target_response', 'retrieved_data'], dtype='object')
@@ -283,9 +283,9 @@ JSONDecodeError: Expecting ',' delimiter: line 39 column 1 (char 1891)
 
 Notebook: `evaluate_judges_test_set_litellm.ipynb`
 
-####  `MTBenchCharBotResponseQuality` class with `baseline` test set
+####  `MTBenchChatBotResponseQuality` class with `baseline` test set
 
-With `baseline` test set, the `MTBenchCharBotResponseQuality` class should return high scores in 9 to 10 range.
+With `baseline` test set, the `MTBenchChatBotResponseQuality` class should return high scores in 9 to 10 range.
 
 ```text
 >>>RUNNING BASELINE TEST CASES FOR MTBenchChatBotResponseQuality
@@ -307,4 +307,80 @@ With `baseline` test set, the `MTBenchCharBotResponseQuality` class should retur
 3           Provide a summary of climate change   True   
 4  Provide a summary of artificial intelligence   True   
 5                 Provide a summary of vaccines   True   
+```
+
+### Testing wtih `litellm` and `ollama_chat/deepseek-r1:32b` LLM
+
+Notebook: `evaluate_judges_test_set_litellm.ipynb`
+
+####  `MTBenchChatBotResponseQuality` class with `baseline` test set
+
+```text
+>>>RUNNING BASELINE TEST CASES FOR MTBenchChatBotResponseQuality
+
+QUERY: Provide a summary of space exploration, related material:
+
+RETRIEVED: ## **The Future of Space Exploration: Colonizing Mars and Beyond**
+
+### **Introduction** Space exploration has captured human imagination for centuries. With recent advancements in rocketry and planetary science, interplanetary colonization is no longer a dream but a plausible reality.
+
+### **Milestones in Space Exploration** The Space Race led to the first moon landing in 1969, and subsequent missions expanded our knowledge of the solar system. The International Space Station (ISS) demonstrated long-term human habitation in space, while private companies like SpaceX and Blue Origin have revitalized interest in space travel.
+### **Colonizing Mars** Mars presents the most feasible option for colonization due to its relative proximity and similarities to Earth. Challenges include radiation exposure, lack of a breathable atmosphere, and low temperatures. Technologies such as in-situ resource utilization (ISRU) and nuclear propulsion could make Mars colonization possible.
+
+### **Beyond Mars: The Interstellar Future** Long-term space colonization may involve asteroid mining, O’Neill cylinders, and generational starships. Breakthrough propulsion systems, such as antimatter drives or warp technology, could one day allow humans to explore exoplanets.
+
+TARGET: ## **The Future of Space Exploration: Colonizing Mars and Beyond**  
+
+### **Introduction**  
+Space exploration has captured human imagination for centuries. With recent advancements in rocketry and planetary science, interplanetary colonization is no longer a dream but a plausible reality.  
+
+### **Milestones in Space Exploration**  
+The Space Race led to the first moon landing in 1969, and subsequent missions expanded our knowledge of the solar system. The International Space Station (ISS) demonstrated long-term human habitation in space, while private companies like SpaceX and Blue Origin have revitalized interest in space travel.  
+
+### **Colonizing Mars**  
+Mars presents the most feasible option for colonization due to its relative proximity and similarities to Earth. Challenges include radiation exposure, lack of a breathable atmosphere, and low temperatures. Technologies such as in-situ resource utilization (ISRU) and nuclear propulsion could make Mars colonization possible.  
+
+### **Beyond Mars: The Interstellar Future**  
+Long-term space colonization may involve asteroid mining, O’Neill cylinders, and generational starships. Breakthrough propulsion systems, such as antimatter drives or warp technology, could one day allow humans to explore exoplanets.  
+---------------------------------------------------------------------------
+KeyError                                  Traceback (most recent call last)
+Cell In[9], line 3
+      1 for judge in judges:
+      2     print(f"\n\n>>>RUNNING BASELINE TEST CASES FOR {judge.__class__.__name__}")
+----> 3     test_results = evalutate_test_set(test_set, judge)
+      4     test_df = pd.DataFrame(test_results)
+      5     print(test_df.columns)
+
+Cell In[7], line 16, in evalutate_test_set(this_test_set, this_judge)
+     14 target_response = this_test_case["target_response"]
+     15 print(f"\nTARGET: {target_response}")
+---> 16 quality = this_judge.judge(query, retrieved_data, target_response)
+     17 print(f"\n>>>QUALITY: {quality}")
+     19 this_test_result = quality.__dict__
+
+File ~/Desktop/automate_llm_testing/venv/lib/python3.12/site-packages/judges/graders/response_quality.py:72, in MTBenchChatBotResponseQuality.judge(self, input, output, expected)
+     55 # Construct the user prompt with the provided exact template
+     56 user_prompt = dedent(
+     57     f"""
+     58     [System]
+   (...)     69     """
+     70 )
+---> 72 reasoning, score = self._judge(
+     73     user_prompt=user_prompt,
+     74     system_prompt=system_prompt,
+     75 )
+     77 return Judgment(reasoning=reasoning, score=score)
+
+File ~/Desktop/automate_llm_testing/venv/lib/python3.12/site-packages/judges/base.py:147, in BaseJudge._judge(self, user_prompt, system_prompt)
+    137 completion = get_completion(
+    138     model=self.model,
+    139     messages=messages,
+   (...)    144     response_format={"type": "json_object"}
+    145 )
+    146 data = json.loads(completion.choices[0].message.content)
+--> 147 reasoning = data["REASONING"]
+    148 score = data["SCORE"]
+    149 return reasoning, score
+
+KeyError: 'REASONING'
 ```
