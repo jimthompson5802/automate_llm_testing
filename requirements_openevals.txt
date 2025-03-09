@@ -1,0 +1,15 @@
+langchain
+langchain-community
+langchain-openai
+langchain-ollama
+faiss-cpu
+instructor
+jupyter
+nbconvert
+ipykernel
+matplotlib
+scipy
+numpy
+pandas
+unstructured
+openevals
