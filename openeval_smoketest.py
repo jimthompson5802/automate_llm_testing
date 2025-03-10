@@ -19,4 +19,4 @@ eval_result = correctness_evaluator(
   reference_outputs=reference_outputs
 )
 
-print(eval_result)
+print(type(eval_result),eval_result)
